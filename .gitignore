@@ -1,0 +1,51 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Testing
+coverage
+
+# Next.js
+.next/
+out/
+build
+dist/
+
+# Misc
+.DS_Store
+*.pem
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Local env files
+.env
+.env*.local
+.env.production
+
+# Vercel
+.vercel
+
+# Turbo
+.turbo
+
+# Prisma
+prisma/migrations/dev.sqlite
+
+
+#MD files:
+API.md
+ARCHITECTURE.md
+GETTING_STARTED.md
+BOOKING_CODE_IMPLEMENTATION.md
+DEPLOYMENT.md
+SETUP.md
+MOBILE_SEAT_SIZING.md
+DEPLOYMENT_GUIDE.md
+TIMEZONE_FIX.md
+CRITICAL_FIXES.md
+

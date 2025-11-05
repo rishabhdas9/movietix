@@ -1,0 +1,175 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String
+  phone     String
+  password  String?   // Optional - for future auth
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Movie {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String   @db.Text
+  poster      String
+  banner      String
+  trailer     String?  // YouTube video ID
+  duration    Int      // in minutes
+  genre       String[]
+  language    String[]
+  rating      Float    @default(0)
+  certificate String   // U, UA, A
+  releaseDate DateTime
+  cast        Json?    // Array of {name, role, image}
+  crew        Json?    // Array of {name, role, image}
+  shows       Show[]
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isActive])
+}
+
+model Theater {
+  id        String   @id @default(cuid())
+  name      String
+  city      String
+  address   String
+  latitude  Float?
+  longitude Float?
+  screens   Screen[]
+  createdAt DateTime @default(now())
+
+  @@index([city])
+}
+
+model Screen {
+  id         String   @id @default(cuid())
+  name       String   // Screen 1, Screen 2, etc.
+  theater    Theater  @relation(fields: [theaterId], references: [id], onDelete: Cascade)
+  theaterId  String
+  totalSeats Int
+  layout     Json     // { rows: 10, columns: 15, aisles: [5, 10] }
+  seats      Seat[]
+  shows      Show[]
+  createdAt  DateTime @default(now())
+}
+
+model Seat {
+  id          String        @id @default(cuid())
+  seatNumber  String        // A1, A2, B1, etc.
+  row         String        // A, B, C, etc.
+  column      Int           // 1, 2, 3, etc.
+  seatType    SeatType
+  screen      Screen        @relation(fields: [screenId], references: [id], onDelete: Cascade)
+  screenId    String
+  bookings    BookingSeat[]
+  locks       SeatLock[]
+  isActive    Boolean       @default(true)
+
+  @@unique([screenId, seatNumber])
+  @@index([screenId])
+}
+
+enum SeatType {
+  REGULAR
+  PREMIUM
+  VIP
+}
+
+model Show {
+  id        String    @id @default(cuid())
+  movie     Movie     @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieId   String
+  screen    Screen    @relation(fields: [screenId], references: [id], onDelete: Cascade)
+  screenId  String
+  startTime DateTime
+  endTime   DateTime
+  pricing   Json      // { "REGULAR": 150, "PREMIUM": 200, "VIP": 300 }
+  bookings  Booking[]
+  locks     SeatLock[]
+  isActive  Boolean   @default(true)
+  date      String    // YYYY-MM-DD for easy filtering
+  createdAt DateTime  @default(now())
+
+  @@index([movieId])
+  @@index([screenId])
+  @@index([date])
+  @@index([startTime])
+}
+
+model Booking {
+  id           String        @id @default(cuid())
+  bookingCode  String        @unique // Generated manually via generateBookingCode()
+  user         User?         @relation(fields: [userId], references: [id])
+  userId       String?
+  show         Show          @relation(fields: [showId], references: [id])
+  showId       String
+  seats        BookingSeat[]
+  totalAmount  Float
+  status       BookingStatus
+  paymentId    String?
+  userName     String
+  userEmail    String
+  userPhone    String
+  bookedAt     DateTime      @default(now())
+  expiresAt    DateTime?     // For seat hold timeout
+  
+  @@index([userId])
+  @@index([showId])
+  @@index([bookingCode])
+  @@index([status])
+  @@index([expiresAt])
+}
+
+enum BookingStatus {
+  PENDING     // Seats selected, payment not done
+  CONFIRMED   // Payment successful
+  CANCELLED   // User cancelled
+  EXPIRED     // Timeout
+}
+
+model BookingSeat {
+  id        String   @id @default(cuid())
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  bookingId String
+  seat      Seat     @relation(fields: [seatId], references: [id])
+  seatId    String
+  price     Float
+  
+  @@unique([bookingId, seatId])
+  @@index([seatId])
+}
+
+// For temporary seat locking mechanism (concurrent booking prevention)
+model SeatLock {
+  id        String   @id @default(cuid())
+  show      Show     @relation(fields: [showId], references: [id], onDelete: Cascade)
+  showId    String
+  seat      Seat     @relation(fields: [seatId], references: [id], onDelete: Cascade)
+  seatId    String
+  sessionId String   // Unique per user session
+  lockedAt  DateTime @default(now())
+  expiresAt DateTime
+  
+  @@unique([showId, seatId])
+  @@index([expiresAt])
+  @@index([sessionId])
+}
+

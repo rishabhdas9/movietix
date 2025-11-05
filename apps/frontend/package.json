@@ -1,0 +1,38 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "clean": "rm -rf .next node_modules .turbo"
+  },
+  "dependencies": {
+    "@movietix/database": "workspace:*",
+    "@tanstack/react-query": "^5.90.6",
+    "axios": "^1.13.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.23.24",
+    "next": "16.0.1",
+    "qrcode.react": "^4.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.3.1",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.16",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.1",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^4.1.16",
+    "typescript": "^5"
+  }
+}

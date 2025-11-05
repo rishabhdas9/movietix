@@ -1,0 +1,28 @@
+{
+  "name": "movietix",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MovieTix - A BookMyShow clone showcasing full-stack capabilities",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "dev:frontend": "turbo run dev --filter=frontend",
+    "dev:backend": "turbo run dev --filter=backend",
+    "db:generate": "turbo run db:generate --filter=@movietix/database",
+    "db:push": "turbo run db:push --filter=@movietix/database",
+    "db:seed": "turbo run db:seed --filter=@movietix/database",
+    "db:studio": "turbo run db:studio --filter=@movietix/database",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "turbo": "^1.11.2",
+    "typescript": "^5.3.3"
+  },
+  "packageManager": "pnpm@8.10.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}
+

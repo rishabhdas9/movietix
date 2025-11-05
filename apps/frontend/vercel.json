@@ -1,0 +1,39 @@
+{
+  "buildCommand": "cd ../.. && pnpm install && cd apps/frontend && pnpm build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "installCommand": "pnpm install",
+  "devCommand": "pnpm dev",
+  "env": {
+    "NEXT_PUBLIC_API_URL": {
+      "description": "Backend API URL (e.g., https://movietix-backend.railway.app)",
+      "required": true
+    }
+  },
+  "functions": {
+    "app/**/*.{js,ts,jsx,tsx}": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ]
+}
+
