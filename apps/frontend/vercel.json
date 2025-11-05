@@ -4,12 +4,6 @@
   "framework": "nextjs",
   "installCommand": "npm install -g pnpm@8.10.0 && pnpm install",
   "devCommand": "pnpm dev",
-  "env": {
-    "NEXT_PUBLIC_API_URL": {
-      "description": "Backend API URL (e.g., https://movietix-backend.railway.app)",
-      "required": true
-    }
-  },
   "functions": {
     "app/**/*.{js,ts,jsx,tsx}": {
       "memory": 1024,
