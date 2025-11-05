@@ -1,0 +1,23 @@
+services:
+  # Backend Service
+  - type: web
+    name: movietix-backend
+    runtime: node
+    env: node
+    region: oregon
+    plan: free
+    rootDir: apps/backend
+    buildCommand: cd ../.. && corepack enable && corepack prepare pnpm@8.10.0 --activate && pnpm install --frozen-lockfile && pnpm --filter @movietix/database db:generate && cd apps/backend && pnpm build
+    startCommand: node dist/main.js
+    envVars:
+      - key: NODE_VERSION
+        value: 22.18.0
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: DATABASE_URL
+        sync: false  # We'll manually set this from Neon
+      - key: FRONTEND_URL
+        value: https://your-app-name.vercel.app  # PLACEHOLDER - Update after Vercel deployment
+    healthCheckPath: /api

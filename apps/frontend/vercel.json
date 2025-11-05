@@ -2,7 +2,7 @@
   "buildCommand": "cd ../.. && pnpm install && cd apps/frontend && pnpm build",
   "outputDirectory": ".next",
   "framework": "nextjs",
-  "installCommand": "pnpm install",
+  "installCommand": "npm install -g pnpm@8.10.0 && pnpm install",
   "devCommand": "pnpm dev",
   "env": {
     "NEXT_PUBLIC_API_URL": {
@@ -36,4 +36,3 @@
     }
   ]
 }
-
