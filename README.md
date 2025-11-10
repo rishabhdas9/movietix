@@ -5,8 +5,8 @@ A full-stack movie ticket booking platform built with modern web technologies, s
 ## 🪄 How to view the demo:
 This project is hosted on Render, so you need to access both the backend and the frontend from the provided URLs to wake the server up. This is a one time process and the server will be awake for 15 minutes from the moment of no activity.
 
-###Backend - (https://movietix-2dsj.onrender.com/api)
-###Frontend - (https://movietix-frontend-7xd2.onrender.com)
+### Backend - (https://movietix-2dsj.onrender.com/api)
+### Frontend - (https://movietix-frontend-7xd2.onrender.com)
 
 Please wait a while for Render to finish initializing the server before you can access the application from the frontend link
 
