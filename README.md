@@ -41,7 +41,7 @@ movietix/
 
 ### Infrastructure
 - **Turborepo** - Monorepo build system
-- **Railway** - Deployment platform
+- **Render** - Deployment platform
 - **pnpm** - Package manager
 
 ## 🚀 Features
@@ -159,23 +159,6 @@ Shared Prisma types ensure consistency between frontend and backend.
 ### 4. Modular Architecture
 NestJS modules can be extracted into microservices for horizontal scaling.
 
-## 🚢 Deployment
-
-### Railway Deployment
-
-1. **Create Railway Project**
-   - Connect GitHub repository
-   - Add PostgreSQL database
-   - Create two services: Backend and Frontend
-
-2. **Backend Service**
-   ```
-   Root Directory: /apps/backend
-   Build Command: pnpm install && pnpm --filter @movietix/database db:generate && pnpm --filter backend build
-   Start Command: pnpm --filter backend start:prod
-   Port: 3001
-   ```
-
 3. **Frontend Service**
    ```
    Root Directory: /apps/frontend
@@ -235,13 +218,6 @@ NestJS modules can be extracted into microservices for horizontal scaling.
 - [ ] Redis caching layer
 - [ ] CI/CD pipeline with GitHub Actions
 
-## 📄 License
-
-MIT
-
-## 👤 Author
-
-Built by [Your Name] as a demonstration of full-stack development capabilities.
 
 ---
 
